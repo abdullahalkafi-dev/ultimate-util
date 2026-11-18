@@ -8,7 +8,7 @@ export const snippetBodySchema = z.object({
   description: z.string().max(2000).default(''),
   body: z.string().max(100_000),
   tags: z.array(z.string().min(1).max(40)).max(20).default([]),
-  collection: z.string().max(80).default(''),
+  folder: z.string().max(80).default(''),
   isFavorite: z.boolean().default(false),
 });
 export type SnippetBody = z.infer<typeof snippetBodySchema>;
