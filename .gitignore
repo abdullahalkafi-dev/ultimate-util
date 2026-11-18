@@ -13,3 +13,6 @@ coverage/
 .pnpm-store/
 playwright-report/
 test-results/
+.backend.log
+.frontend.log
+next-env.d.ts
