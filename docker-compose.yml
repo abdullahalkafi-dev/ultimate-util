@@ -53,7 +53,7 @@ services:
     environment:
       BACKEND_URL: http://backend:4000
     ports:
-      - "3000:3000"
+      - "${FRONTEND_PORT:-3000}:3000"
 
 volumes:
   mongo-data:
