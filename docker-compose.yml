@@ -1,0 +1,59 @@
+services:
+  mongo:
+    image: mongo:7
+    command: ["--replSet", "rs0", "--bind_ip_all"]
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: >
+        mongosh --quiet --eval
+        "try { rs.status().ok } catch (e) { rs.initiate({_id:'rs0',members:[{_id:0,host:'mongo:27017'}]}).ok }"
+      interval: 5s
+      timeout: 10s
+      retries: 20
+      start_period: 10s
+
+  mongo-express:
+    image: mongo-express:1
+    profiles: ["dev"]
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://mongo:27017/?replicaSet=rs0
+      ME_CONFIG_BASICAUTH: "false"
+    ports:
+      - "8081:8081"
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    depends_on:
+      mongo:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      MONGO_URI: ${MONGO_URI:-mongodb://mongo:27017/ultimate-util?replicaSet=rs0}
+      NODE_ENV: production
+    ports:
+      - "4000:4000"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        BACKEND_URL: http://backend:4000
+    depends_on:
+      - backend
+    environment:
+      BACKEND_URL: http://backend:4000
+    ports:
+      - "3000:3000"
+
+volumes:
+  mongo-data:
