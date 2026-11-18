@@ -1,0 +1,424 @@
+<title>Ultimate Util Home</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+/* Layout concept: one shared tool catalogue, three home-page layouts (A top bar + grid, B sidebar + cards, C search hero + grouped rows). Light, minimal, accent differs per variant. */
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --fg:#13161d; --muted:#596070; --faint:#6b7280;
+  --line:#e3e6ec; --line2:#d2d7e0;
+  --accent:#2456e5; --accent-soft:#e8eefc; --accent-fg:#ffffff;
+  --cloud:#6a4fd8; --cloud-soft:#efeafd; --local:#0b7d62; --local-soft:#e2f4ee;
+  --pop:0 6px 18px rgba(19,22,29,.08);
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --head:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1218; --surface:#171b23; --fg:#eef0f4; --muted:#a0a8b6; --faint:#8b94a3;
+    --line:#262c37; --line2:#343c4a;
+    --accent:#7b9bff; --accent-soft:#1b2547; --accent-fg:#0f1218;
+    --cloud:#a99bff; --cloud-soft:#251f45; --local:#4cc9a4; --local-soft:#12332a;
+    --pop:0 6px 18px rgba(0,0,0,.4); color-scheme:dark;
+  }
+  :root:not([data-theme="light"]) .app[data-v="b"]{--accent:#4cc9a4;--accent-soft:#12332a}
+  :root:not([data-theme="light"]) .app[data-v="c"]{--accent:#ff8a6a;--accent-soft:#3a1f18}
+}
+:root[data-theme="dark"]{
+  --bg:#0f1218; --surface:#171b23; --fg:#eef0f4; --muted:#a0a8b6; --faint:#8b94a3;
+  --line:#262c37; --line2:#343c4a;
+  --accent:#7b9bff; --accent-soft:#1b2547; --accent-fg:#0f1218;
+  --cloud:#a99bff; --cloud-soft:#251f45; --local:#4cc9a4; --local-soft:#12332a;
+  --pop:0 6px 18px rgba(0,0,0,.4); color-scheme:dark;
+}
+:root[data-theme="dark"] .app[data-v="b"]{--accent:#4cc9a4;--accent-soft:#12332a}
+:root[data-theme="dark"] .app[data-v="c"]{--accent:#ff8a6a;--accent-soft:#3a1f18}
+
+.app[data-v="b"]{--accent:#0b7d62;--accent-soft:#e2f4ee;--font:'DM Sans',system-ui,sans-serif;--head:'DM Sans',system-ui,sans-serif}
+.app[data-v="c"]{--accent:#d4492a;--accent-soft:#fdebe6;--head:'Space Grotesk','Inter',system-ui,sans-serif}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:14px;line-height:1.5;margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+button{font:inherit;color:inherit;cursor:pointer}
+svg{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.app{font-family:var(--font);min-height:100vh}
+.in{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* mockup switcher (not part of the product UI) */
+.mock{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--fg);color:var(--bg)}
+.mock .in{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+.mock b{font-size:12px;letter-spacing:.06em;text-transform:uppercase;opacity:.75;font-weight:600}
+.seg{display:flex;gap:4px;flex-wrap:wrap}
+.seg button{border:0;background:transparent;color:inherit;padding:5px 12px;border-radius:999px;font-size:13px;font-weight:500;opacity:.8}
+.seg button[aria-pressed="true"]{background:var(--bg);color:var(--fg);opacity:1}
+.mock span.hint{font-size:12px;opacity:.7;margin-left:auto}
+
+/* shared parts */
+.logo{display:flex;align-items:center;gap:9px;font-family:var(--head);font-weight:700;font-size:17px;letter-spacing:-.01em;white-space:nowrap}
+.logo i{width:28px;height:28px;border-radius:8px;background:var(--accent);color:var(--accent-fg);display:grid;place-items:center;font-style:normal;font-size:16px}
+.search{position:relative;display:flex;align-items:center;flex:1;max-width:580px}
+.search svg{position:absolute;left:12px;font-size:17px;color:var(--faint)}
+.search input{width:100%;height:40px;border:1px solid var(--line2);background:var(--surface);color:var(--fg);border-radius:10px;padding:0 70px 0 38px;font:inherit}
+.search input::placeholder{color:var(--faint)}
+.search input:focus{outline:2px solid var(--accent);outline-offset:0;border-color:transparent}
+.search kbd{position:absolute;right:10px;font:600 11px var(--font);color:var(--faint);border:1px solid var(--line2);border-radius:5px;padding:1px 6px;background:var(--bg)}
+.btn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 14px;border-radius:10px;border:1px solid var(--line2);background:var(--surface);font-weight:500;white-space:nowrap}
+.btn:hover{border-color:var(--faint)}
+.btn.pri{background:var(--accent);color:var(--accent-fg);border-color:transparent}
+.ico{width:36px;height:36px;border-radius:9px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-size:19px;flex:none}
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:2px 7px;border-radius:999px;white-space:nowrap}
+.tag svg{font-size:12px}
+.tag.cloud{background:var(--cloud-soft);color:var(--cloud)}
+.tag.local{background:var(--local-soft);color:var(--local)}
+.tag.new{background:var(--accent);color:var(--accent-fg)}
+.star{border:0;background:transparent;color:var(--faint);width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-size:17px;flex:none}
+.star:hover{background:var(--bg);color:var(--fg)}
+.star[aria-pressed="true"]{color:var(--accent)}
+.star[aria-pressed="true"] svg{fill:currentColor}
+.card{cursor:pointer;position:relative}
+.name{font-family:var(--head);font-weight:600;font-size:15px;letter-spacing:-.005em}
+.desc{color:var(--muted);font-size:13px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cat{font-size:12px;color:var(--faint)}
+.empty{border:1px dashed var(--line2);border-radius:12px;padding:36px 16px;text-align:center;color:var(--muted)}
+
+/* bookmarks bar */
+.bm{display:flex;align-items:center;gap:10px;min-width:0}
+.bm-label{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+.bm-label svg{font-size:14px;color:var(--accent)}
+.bm-list{display:flex;gap:6px;overflow-x:auto;padding:2px 0;scrollbar-width:none;min-width:0;flex:1}
+.bm-list::-webkit-scrollbar{display:none}
+.chip{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line2);background:var(--surface);border-radius:999px;height:30px;padding:0 4px 0 10px;white-space:nowrap;font-size:13px;font-weight:500;flex:none}
+.chip .o{display:inline-flex;align-items:center;gap:6px;border:0;background:transparent;padding:0;height:100%}
+.chip .o svg{font-size:14px;color:var(--accent)}
+.chip .x{border:0;background:transparent;width:22px;height:22px;border-radius:50%;color:var(--faint);font-size:14px;display:grid;place-items:center}
+.chip .x:hover{background:var(--bg);color:var(--fg)}
+.bm-empty{color:var(--faint);font-size:13px}
+.bm-note{font-size:12px;color:var(--faint);white-space:nowrap}
+
+/* category chips */
+.cats{display:flex;gap:6px;flex-wrap:wrap}
+.cats button{border:1px solid var(--line2);background:transparent;border-radius:999px;padding:5px 12px;font-size:13px;font-weight:500;color:var(--muted)}
+.cats button:hover{color:var(--fg);border-color:var(--faint)}
+.cats button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.foot{color:var(--faint);font-size:12.5px;padding-top:28px;padding-bottom:40px;display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between}
+
+/* ===== Variant A ===== */
+.a .top{background:var(--surface);border-bottom:1px solid var(--line)}
+.a .top .in{display:flex;align-items:center;gap:18px;height:62px}
+.a .bmbar{background:var(--surface);border-bottom:1px solid var(--line)}
+.a .bmbar .in{padding-top:9px;padding-bottom:9px}
+.a main{padding-top:24px}
+.a .intro{display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.a h1{font:700 26px/1.2 var(--head);letter-spacing:-.02em;margin:0 0 4px}
+.a .intro p{margin:0;color:var(--muted)}
+.a .cats{margin-bottom:18px}
+.a .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(218px,1fr));gap:12px}
+.a .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px;transition:border-color .15s,box-shadow .15s}
+.a .card:hover{border-color:var(--line2);box-shadow:var(--pop)}
+.a .card .r1{display:flex;justify-content:space-between;align-items:flex-start}
+.a .card .r3{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;padding-top:2px}
+
+/* ===== Variant B ===== */
+.b .shell{display:grid;grid-template-columns:248px minmax(0,1fr);min-height:calc(100vh - 46px)}
+.b .side{background:var(--surface);border-right:1px solid var(--line);padding:20px 14px;position:sticky;top:46px;align-self:start;height:calc(100vh - 46px);display:flex;flex-direction:column;gap:20px;overflow:auto}
+.b .nav{display:flex;flex-direction:column;gap:2px}
+.b .nav button{display:flex;align-items:center;gap:10px;border:0;background:transparent;padding:8px 10px;border-radius:9px;color:var(--muted);font-weight:500;text-align:left;width:100%}
+.b .nav button svg{font-size:17px}
+.b .nav button em{margin-left:auto;font-style:normal;font-size:12px;color:var(--faint)}
+.b .nav button:hover{background:var(--bg);color:var(--fg)}
+.b .nav button[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent)}
+.b .side-foot{margin-top:auto;border:1px solid var(--line);border-radius:12px;padding:12px;font-size:12.5px;color:var(--muted);display:flex;flex-direction:column;gap:10px}
+.b .side-foot .btn{justify-content:center;width:100%}
+.b .main{padding-top:20px;padding-bottom:20px;display:flex;flex-direction:column;gap:18px;min-width:0}
+.b .main .in{max-width:1000px;width:100%;margin:0;display:flex;flex-direction:column;gap:18px}
+.b .toprow{display:flex;gap:12px;align-items:center}
+.b .toprow .search{max-width:none}
+.b .panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.b h2{font:700 20px var(--head);margin:0;letter-spacing:-.01em}
+.b .head{display:flex;align-items:baseline;gap:10px}
+.b .head span{color:var(--faint);font-size:13px}
+.b .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.b .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;grid-template-columns:auto 1fr auto;gap:4px 14px;align-items:start;transition:box-shadow .15s,border-color .15s}
+.b .card:hover{box-shadow:var(--pop);border-color:var(--line2)}
+.b .card .ico{width:42px;height:42px;font-size:22px;border-radius:11px;grid-row:span 2}
+.b .card .tags{grid-column:2/4;display:flex;gap:6px;align-items:center;margin-top:6px;flex-wrap:wrap}
+.b .card .desc{grid-column:2}
+.b .mhead{display:none}
+
+/* ===== Variant C ===== */
+.c .top .in{display:flex;align-items:center;justify-content:space-between;height:64px}
+.c .hero{text-align:center;padding-top:30px;padding-bottom:6px}
+.c h1{font:700 clamp(28px,5vw,44px)/1.1 var(--head);letter-spacing:-.03em;margin:0 auto 10px;max-width:16em;text-wrap:balance}
+.c .hero p{margin:0 auto 22px;color:var(--muted);max-width:34em;font-size:15px}
+.c .hero .search{margin:0 auto;max-width:620px}
+.c .hero .search input{height:52px;border-radius:14px;font-size:16px;padding-left:46px;box-shadow:var(--pop)}
+.c .hero .search svg{left:16px;font-size:20px}
+.c .bmrow{display:flex;justify-content:center;margin-top:18px}
+.c .bmrow .bm{max-width:100%}
+.c .cats{justify-content:center;margin:22px 0 8px}
+.c .sec{margin-top:30px}
+.c .sec h2{display:flex;align-items:center;gap:10px;font:600 13px var(--head);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 6px;padding-bottom:10px;border-bottom:1px solid var(--line2)}
+.c .sec h2 em{font-style:normal;color:var(--faint);font-weight:500}
+.c .rows{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));column-gap:32px}
+.c .card{display:flex;align-items:center;gap:12px;padding:12px 6px;border-bottom:1px solid var(--line);border-radius:8px}
+.c .card:hover{background:var(--surface)}
+.c .card .ico{width:34px;height:34px;font-size:18px;border-radius:8px}
+.c .card .tx{min-width:0;flex:1}
+.c .card .desc{-webkit-line-clamp:1}
+.c .card .nm{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:13px;opacity:0;pointer-events:none;transition:.2s;z-index:80;max-width:calc(100vw - 32px);text-align:center}
+.toast.on{opacity:1;transform:translateX(-50%)}
+
+@media (max-width:900px){
+  .b .shell{grid-template-columns:minmax(0,1fr)}
+  .b .side{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);padding:12px max(16px,env(safe-area-inset-left,0px));flex-direction:row;align-items:center;gap:12px;overflow:visible}
+  .b .side .logo{display:none}
+  .b .nav{flex-direction:row;overflow-x:auto;gap:6px;scrollbar-width:none}
+  .b .nav button{width:auto;white-space:nowrap;border:1px solid var(--line2);border-radius:999px;padding:6px 12px}
+  .b .nav button svg,.b .nav button em{display:none}
+  .b .side-foot{display:none}
+  .b .main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .b .main .in{padding-left:0;padding-right:0}
+}
+@media (max-width:640px){
+  .a .top .in{gap:10px}
+  .a .signin span,.c .signin span,.b .signin span{display:none}
+  .search kbd{display:none}
+  .search input{padding-right:12px}
+  .bm-note{display:none}
+  .mock span.hint{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="mock"><div class="in">
+  <b>Home page mockup</b>
+  <div class="seg" role="group" aria-label="Choose a variant">
+    <button data-variant="a" aria-pressed="true">A · Top bar + grid</button>
+    <button data-variant="b" aria-pressed="false">B · Sidebar + cards</button>
+    <button data-variant="c" aria-pressed="false">C · Search first</button>
+  </div>
+  <span class="hint">Star a tool, reload: bookmarks come from localStorage</span>
+</div></div>
+
+<div class="app" id="app" data-v="a"></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const ICONS = {
+  doc:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>',
+  swap:'<path d="M7 7h11l-3-3M17 17H6l3 3"/>',
+  layers:'<path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/>',
+  shrink:'<path d="M4 14h6v6M20 10h-6V4M14 10l7-7M3 21l7-7"/>',
+  scan:'<path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M8 12h8"/>',
+  image:'<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m21 16-5-5-8 8"/>',
+  resize:'<rect x="4" y="4" width="10" height="10" rx="1.5"/><path d="M14 20h6v-6M20 20l-8-8"/>',
+  edit:'<path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="m13.5 6.5 4 4"/>',
+  wand:'<path d="m5 19 10-10M14 5l1.5 1.5M18 9l1.5 1.5M17 3v2M20 6h-2M7 3v2M8 4H6"/><path d="m13 7 4 4"/>',
+  tag:'<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.2"/>',
+  video:'<rect x="3" y="5" width="14" height="14" rx="2"/><path d="m17 10 4-2v8l-4-2"/>',
+  sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6 19 19M5 19l1.4-1.4M17.6 6.4 19 5"/>',
+  palette:'<path d="M12 3a9 9 0 1 0 0 18c1.2 0 1.8-.9 1.8-1.8 0-1.6-1-1.6-1-2.7 0-1 .8-1.5 1.8-1.5H17a4 4 0 0 0 4-4c0-4-4-8-9-8z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/>',
+  css:'<rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="5" rx="1.5"/><rect x="13" y="10" width="8" height="11" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/>',
+  svg:'<path d="M5 19c0-8 4-14 14-14 0 10-6 14-14 14z"/><path d="M5 19 13 11"/>',
+  type:'<path d="M5 6V4h14v2M12 4v16M9 20h6"/>',
+  frame:'<rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/>',
+  braces:'<path d="M8 4c-2 0-3 1-3 3v2c0 1.5-1 3-2 3 1 0 2 1.500 2 3v2c0 2 1 3 3 3M16 4c2 0 3 1 3 3v2c0 1.500 1 3 2 3-1 0-2 1.500-2 3v2c0 2-1 3-3 3"/>',
+  key:'<circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M16 7l3 3"/>',
+  regex:'<path d="M12 4v10M7.500 6.500l9 5M16.500 6.500l-9 5"/><circle cx="7" cy="19" r="1.2"/>',
+  hash:'<path d="M5 9h14M5 15h14M10 4 8 20M16 4l-2 16"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  db:'<ellipse cx="12" cy="5.500" rx="7" ry="2.500"/><path d="M5 5.500v13c0 1.400 3 2.500 7 2.500s7-1.100 7-2.500v-13M5 12c0 1.400 3 2.500 7 2.500s7-1.100 7-2.500"/>',
+  qr:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h3M20 17v4"/>',
+  ruler:'<path d="m3 17 14-14 4 4L7 21z"/><path d="m7 13 2 2M10 10l2 2M13 7l2 2"/>',
+  lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+  count:'<path d="M4 7h16M4 12h10M4 17h13"/>',
+  shield:'<path d="M12 3 4 6v6c0 4.500 3.400 8 8 9 4.600-1 8-4.500 8-9V6z"/><path d="m9 12 2 2 4-4"/>',
+  note:'<path d="M5 4h14v16H5z"/><path d="M9 9h6M9 13h6M9 17h3"/>',
+  code:'<path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/>',
+  clip:'<rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4h6v3H9zM9 12h6M9 16h4"/>',
+  timer:'<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.500 1.500M9 2h6"/>',
+  cloud:'<path d="M7 18a4 4 0 0 1-.5-8A6 6 0 0 1 18 9.500 4 4 0 0 1 17.500 18z"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>',
+  star:'<path d="m12 3 2.800 5.700 6.200.9-4.500 4.400 1.100 6.200L12 17.200 6.400 20.200l1.100-6.200L3 9.600l6.200-.9z"/>',
+  grid:'<rect x="3" y="3" width="7" height="7" rx="1.500"/><rect x="14" y="3" width="7" height="7" rx="1.500"/><rect x="3" y="14" width="7" height="7" rx="1.500"/><rect x="14" y="14" width="7" height="7" rx="1.500"/>',
+  user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>'
+};
+const ic = k => '<svg viewBox="0 0 24 24" aria-hidden="true">' + (ICONS[k] || ICONS.grid) + '</svg>';
+
+const CATS = [
+  {id:'docs',   name:'Documents',      icon:'doc'},
+  {id:'media',  name:'Image & media',  icon:'image'},
+  {id:'design', name:'Design',         icon:'palette'},
+  {id:'dev',    name:'Developer',      icon:'braces'},
+  {id:'daily',  name:'Everyday',       icon:'timer'},
+  {id:'cloud',  name:'Cloud-synced',   icon:'cloud'}
+];
+const T = [
+  {id:'docx',   cat:'docs',   icon:'doc',    isNew:1, name:'DOCX Viewer & Editor', desc:'Open any Word file, edit with live preview, export to PDF. Nothing leaves your browser.'},
+  {id:'pdfdocx',cat:'docs',   icon:'swap',   name:'PDF ⇄ DOCX',            desc:'Convert between PDF and Word locally, no upload.'},
+  {id:'pdfmerge',cat:'docs',  icon:'layers', name:'PDF Merge, Split & Reorder', desc:'Combine files, pull out pages, drag to reorder.'},
+  {id:'pdfzip', cat:'docs',   icon:'shrink', name:'PDF Compress & Protect', desc:'Shrink size for email, add or remove a password.'},
+  {id:'ocr',    cat:'docs',   icon:'scan',   name:'OCR: Image or PDF to Text', desc:'Pull selectable text out of scans and screenshots.'},
+  {id:'imgzip', cat:'media',  icon:'shrink', name:'Image Compressor',       desc:'Cut PNG, JPG and WebP size by up to 80%.'},
+  {id:'resize', cat:'media',  icon:'resize', name:'Bulk Resizer & Converter', desc:'Batch resize and convert AVIF, WebP, PNG, JPG, SVG.'},
+  {id:'imged',  cat:'media',  icon:'edit',   name:'Image Editor',           desc:'Crop, filters, layers, curves, annotations and blur.'},
+  {id:'bgrem',  cat:'media',  icon:'wand',   name:'Background Remover',     desc:'Cut out subjects with an on-device AI model.'},
+  {id:'exif',   cat:'media',  icon:'tag',    name:'EXIF Viewer & Stripper', desc:'See camera and GPS data, wipe it before sharing.'},
+  {id:'video',  cat:'media',  icon:'video',  name:'Video Trimmer & GIF Maker', desc:'Trim clips, strip audio, turn MP4 into GIF.'},
+  {id:'color',  cat:'design', icon:'sun',    name:'Color Wheel & Softbox Light', desc:'Pick colors, or go fullscreen and use your screen as a soft face light.'},
+  {id:'palette',cat:'design', icon:'palette',name:'Palette & Contrast Checker', desc:'Harmonious schemes and WCAG AA/AAA checks.'},
+  {id:'cssgen', cat:'design', icon:'css',    name:'CSS & Tailwind Generators', desc:'Grid, flexbox, shadows, glass and mesh gradients.'},
+  {id:'svgopt', cat:'design', icon:'svg',    name:'SVG Optimizer & JSX',    desc:'Clean exported SVGs, convert to React or Vue.'},
+  {id:'fonts',  cat:'design', icon:'type',   name:'Font Pairer & Type Scale', desc:'Compare Google Font pairs, build a modular scale.'},
+  {id:'mock',   cat:'design', icon:'frame',  name:'Placeholder & Mockups',  desc:'Dummy images, device frames and fake user data.'},
+  {id:'json',   cat:'dev',    icon:'braces', name:'JSON / YAML / XML Formatter', desc:'Validate, beautify, minify and diff side by side.'},
+  {id:'jwt',    cat:'dev',    icon:'key',    name:'JWT Decoder',            desc:'Inspect token headers and expiry without leaking it.'},
+  {id:'regex',  cat:'dev',    icon:'regex',  name:'Regex Tester',           desc:'Live matches with a plain-English token breakdown.'},
+  {id:'b64',    cat:'dev',    icon:'hash',   name:'Base64, URL & Hash',     desc:'Encode, decode, and generate MD5, SHA-256, bcrypt.'},
+  {id:'cron',   cat:'dev',    icon:'clock',  name:'Cron Parser',            desc:'Read cron in plain words and preview the next 10 runs.'},
+  {id:'sql',    cat:'dev',    icon:'db',     name:'SQL & cURL Tools',       desc:'Format SQL, turn cURL into fetch or axios.'},
+  {id:'qr',     cat:'daily',  icon:'qr',     name:'QR & Barcode',           desc:'Make Wi-Fi, vCard and URL codes. Scan from webcam.'},
+  {id:'units',  cat:'daily',  icon:'ruler',  name:'Unit & Timezone Converter', desc:'Length, weight, data size and world clocks.'},
+  {id:'pass',   cat:'daily',  icon:'lock',   name:'Password Generator',     desc:'Random passwords and passphrases with strength meter.'},
+  {id:'words',  cat:'daily',  icon:'count',  name:'Word & Reading Counter', desc:'Counts, keyword density and reading time.'},
+  {id:'totp',   cat:'cloud',  icon:'shield', cloud:1, name:'2FA Authenticator', desc:'Rotating 6-digit codes, encrypted and backed up.'},
+  {id:'notes',  cat:'cloud',  icon:'note',   cloud:1, name:'Secure Notes',      desc:'Encrypted notes and API keys on every device.'},
+  {id:'snip',   cat:'cloud',  icon:'code',   cloud:1, name:'Snippet & Prompt Manager', desc:'Code, commands and AI prompts, tagged and searchable.'},
+  {id:'saved',  cat:'cloud',  icon:'palette',cloud:1, name:'Saved Palettes & Presets', desc:'Brand colors and favorite softbox lights, anywhere.'},
+  {id:'drop',   cat:'cloud',  icon:'clip',   cloud:1, name:'Clipboard & Cross-Device Drop', desc:'Send text, links and small files phone to PC.'},
+  {id:'focus',  cat:'cloud',  icon:'timer',  cloud:1, name:'Pomodoro & Habit Tracker', desc:'Focus sessions and streaks tracked over months.'}
+];
+const byId = Object.fromEntries(T.map(t => [t.id, t]));
+const catName = id => CATS.find(c => c.id === id).name;
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+/* state */
+const KEY = 'uu-bookmarks';
+let bm;
+try { bm = JSON.parse(localStorage.getItem(KEY)); if (!Array.isArray(bm)) throw 0; } catch (e) { bm = ['docx','color','json','qr']; }
+bm = bm.filter(id => byId[id]);
+const saveBm = () => { try { localStorage.setItem(KEY, JSON.stringify(bm)); } catch (e) {} };
+let variant = ({'#a':'a','#b':'b','#c':'c'})[location.hash] || 'a';
+let cat = 'all', q = '';
+
+const app = document.getElementById('app');
+
+/* shared fragments */
+const badge = t => t.cloud
+  ? '<span class="tag cloud" title="Saves to your Google account">' + ic('cloud') + 'Synced</span>'
+  : '<span class="tag local" title="Runs 100% in your browser">' + ic('lock') + 'Local</span>';
+const newTag = t => t.isNew ? '<span class="tag new">New</span>' : '';
+const star = t => '<button class="star" data-star="' + t.id + '" aria-pressed="' + bm.includes(t.id) + '" aria-label="Bookmark ' + esc(t.name) + '">' + ic('star') + '</button>';
+const signin = '<button class="btn signin">' + ic('user') + '<span>Sign in with Google</span></button>';
+const searchBox = '<label class="search">' + ic('search') + '<input id="q" type="search" placeholder="Search 33 tools" autocomplete="off" aria-label="Search tools"><kbd>Ctrl K</kbd></label>';
+const bmBlock = '<div class="bm"><span class="bm-label">' + ic('star') + 'Bookmarks</span><div class="bm-list" id="bm"></div><span class="bm-note">Saved in this browser</span></div>';
+const foot = '<div class="foot in"><span>27 tools run entirely in your browser. 6 sync to your account after Google login.</span><span>Files you open never get uploaded.</span></div>';
+
+function cardA(t){
+  return '<article class="card" data-open="' + t.id + '" tabindex="0">'
+    + '<div class="r1"><span class="ico">' + ic(t.icon) + '</span>' + star(t) + '</div>'
+    + '<div><div class="name">' + esc(t.name) + '</div><div class="desc">' + esc(t.desc) + '</div></div>'
+    + '<div class="r3"><span class="cat">' + esc(catName(t.cat)) + '</span><span style="display:flex;gap:6px">' + newTag(t) + badge(t) + '</span></div></article>';
+}
+function cardB(t){
+  return '<article class="card" data-open="' + t.id + '" tabindex="0">'
+    + '<span class="ico">' + ic(t.icon) + '</span><div class="name">' + esc(t.name) + '</div>' + star(t)
+    + '<div class="desc">' + esc(t.desc) + '</div>'
+    + '<div class="tags">' + newTag(t) + badge(t) + '<span class="cat">' + esc(catName(t.cat)) + '</span></div></article>';
+}
+function rowC(t){
+  return '<article class="card" data-open="' + t.id + '" tabindex="0"><span class="ico">' + ic(t.icon) + '</span>'
+    + '<div class="tx"><div class="nm"><span class="name">' + esc(t.name) + '</span>' + newTag(t) + badge(t) + '</div><div class="desc">' + esc(t.desc) + '</div></div>' + star(t) + '</article>';
+}
+
+/* shells */
+function shell(){
+  app.dataset.v = variant;
+  app.className = 'app ' + variant;
+  if (variant === 'a') {
+    app.innerHTML =
+      '<header class="top"><div class="in"><div class="logo"><i>' + ic('grid') + '</i>Ultimate Util</div>' + searchBox + '<span style="flex:1"></span>' + signin + '</div></header>'
+      + '<div class="bmbar"><div class="in">' + bmBlock + '</div></div>'
+      + '<main class="in"><div class="intro"><div><h1>All your everyday tools</h1><p>Fast, private and free. Most run right in your browser.</p></div></div>'
+      + '<div class="cats" id="nav"></div><div id="results"></div></main>' + foot;
+  } else if (variant === 'b') {
+    app.innerHTML =
+      '<div class="shell"><aside class="side"><div class="logo"><i>' + ic('grid') + '</i>Ultimate Util</div><nav class="nav" id="nav" aria-label="Categories"></nav>'
+      + '<div class="side-foot"><span>Sign in to sync 2FA codes, notes, snippets and your clipboard across devices.</span>' + signin + '</div></aside>'
+      + '<div class="main"><div class="in"><div class="toprow">' + searchBox + '<span style="flex:1"></span></div>'
+      + '<div class="panel">' + bmBlock + '</div><div class="head"><h2 id="ttl">All tools</h2><span id="cnt"></span></div><div id="results"></div></div>' + foot.replace('foot in','foot') + '</div></div>';
+  } else {
+    app.innerHTML =
+      '<header class="top"><div class="in"><div class="logo"><i>' + ic('grid') + '</i>Ultimate Util</div>' + signin + '</div></header>'
+      + '<section class="hero in"><h1>Small tools for big jobs. Nothing gets uploaded.</h1><p>Edit documents, compress images, format code, pick colors. Open a tool and get to work.</p>' + searchBox
+      + '<div class="bmrow">' + bmBlock + '</div><div class="cats" id="nav"></div></section>'
+      + '<main class="in" id="results"></main>' + foot;
+  }
+  document.getElementById('q').value = q;
+  paintNav(); paintBm(); paintResults();
+  document.querySelectorAll('[data-variant]').forEach(b => b.setAttribute('aria-pressed', b.dataset.variant === variant));
+}
+
+function paintNav(){
+  const nav = document.getElementById('nav');
+  const all = [{id:'all', name:'All tools', icon:'grid', n:T.length}].concat(CATS.map(c => ({...c, n:T.filter(t => t.cat === c.id).length})));
+  if (variant === 'b') {
+    nav.innerHTML = all.map(c => '<button data-cat="' + c.id + '" aria-pressed="' + (cat === c.id) + '">' + ic(c.icon) + esc(c.name) + '<em>' + c.n + '</em></button>').join('');
+  } else {
+    nav.innerHTML = all.map(c => '<button data-cat="' + c.id + '" aria-pressed="' + (cat === c.id) + '">' + esc(c.name) + '</button>').join('');
+  }
+}
+function paintBm(){
+  const el = document.getElementById('bm');
+  el.innerHTML = bm.length
+    ? bm.map(id => { const t = byId[id]; return '<span class="chip"><button class="o" data-open="' + id + '">' + ic(t.icon) + esc(t.name) + '</button><button class="x" data-rm="' + id + '" aria-label="Remove ' + esc(t.name) + ' from bookmarks">×</button></span>'; }).join('')
+    : '<span class="bm-empty">Star a tool and it appears here for one-click access.</span>';
+}
+function filtered(){
+  const s = q.trim().toLowerCase();
+  return T.filter(t => (cat === 'all' || t.cat === cat) && (!s || (t.name + ' ' + t.desc + ' ' + catName(t.cat)).toLowerCase().includes(s)));
+}
+function paintResults(){
+  const items = filtered(), el = document.getElementById('results');
+  const none = '<div class="empty">No tool matches “' + esc(q) + '”. Try a shorter word like “pdf” or “color”.</div>';
+  if (variant === 'c') {
+    if (!items.length) { el.innerHTML = none; return; }
+    el.innerHTML = CATS.map(c => {
+      const g = items.filter(t => t.cat === c.id);
+      return g.length ? '<section class="sec"><h2>' + esc(c.name) + ' <em>' + g.length + '</em></h2><div class="rows">' + g.map(rowC).join('') + '</div></section>' : '';
+    }).join('');
+    return;
+  }
+  if (variant === 'b') {
+    document.getElementById('ttl').textContent = cat === 'all' ? 'All tools' : catName(cat);
+    document.getElementById('cnt').textContent = items.length + ' tools';
+  }
+  el.innerHTML = items.length ? '<div class="grid">' + items.map(variant === 'a' ? cardA : cardB).join('') + '</div>' : none;
+}
+
+/* events */
+let tt;
+function toast(msg){ const el = document.getElementById('toast'); el.textContent = msg; el.classList.add('on'); clearTimeout(tt); tt = setTimeout(() => el.classList.remove('on'), 1900); }
+document.addEventListener('click', e => {
+  const v = e.target.closest('[data-variant]'); if (v) { variant = v.dataset.variant; location.hash = variant; shell(); return; }
+  const s = e.target.closest('[data-star]');
+  if (s) { const id = s.dataset.star; bm = bm.includes(id) ? bm.filter(x => x !== id) : bm.concat(id); saveBm(); paintBm(); paintResults(); toast(bm.includes(id) ? 'Added to bookmarks' : 'Removed from bookmarks'); return; }
+  const r = e.target.closest('[data-rm]');
+  if (r) { bm = bm.filter(x => x !== r.dataset.rm); saveBm(); paintBm(); paintResults(); return; }
+  const c = e.target.closest('[data-cat]'); if (c) { cat = c.dataset.cat; paintNav(); paintResults(); return; }
+  const o = e.target.closest('[data-open]'); if (o) { toast('Mockup only. This would open ' + byId[o.dataset.open].name); return; }
+  if (e.target.closest('.signin')) toast('Mockup only. This would start Google login');
+});
+document.addEventListener('input', e => { if (e.target.id === 'q') { q = e.target.value; paintResults(); } });
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); const i = document.getElementById('q'); i.focus(); i.select(); return; }
+  if (e.key === '/' && !/input|textarea/i.test(document.activeElement.tagName)) { e.preventDefault(); document.getElementById('q').focus(); return; }
+  if (e.key === 'Enter' && document.activeElement.matches('.card')) document.activeElement.click();
+});
+window.addEventListener('hashchange', () => { const n = ({'#a':'a','#b':'b','#c':'c'})[location.hash]; if (n && n !== variant) { variant = n; shell(); } });
+shell();
+</script>
