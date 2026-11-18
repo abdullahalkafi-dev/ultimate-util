@@ -16,3 +16,6 @@ test-results/
 .backend.log
 .frontend.log
 next-env.d.ts
+
+# copied from node_modules by scripts/copy-assets.mjs
+frontend/public/vendor/
