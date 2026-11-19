@@ -1,0 +1,56 @@
+.exprInput {
+  font-family: var(--mono);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.summaryBox {
+  padding: 16px;
+  border-radius: var(--radius);
+  background: var(--accent-soft);
+  border: 1.5px solid var(--accent);
+}
+.summaryText {
+  font: 700 20px var(--head);
+  margin: 0;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.table th,
+.table td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.table th {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+.errorCell {
+  background: var(--danger-soft);
+  color: var(--danger);
+  font-weight: 700;
+}
+.builderCard {
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px;
+  background: var(--bg);
+}
+.codeBlock {
+  font-family: var(--mono);
+  font-size: 13px;
+  background: var(--bg);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px;
+  margin: 0;
+  overflow: auto;
+  white-space: pre;
+}
