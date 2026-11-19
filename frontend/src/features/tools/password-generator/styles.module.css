@@ -1,0 +1,20 @@
+.output {
+  font-size: 22px;
+  line-height: 1.5;
+  word-break: break-all;
+  padding: 14px 16px;
+  border: 1.5px solid var(--line2);
+  border-radius: 12px;
+  background: var(--bg);
+  min-height: 64px;
+  font-variant-numeric: slashed-zero;
+  letter-spacing: 0.02em;
+}
+.digit { color: var(--accent); font-weight: 700; }
+.symbol { color: var(--danger); font-weight: 700; }
+.bulk { list-style: none; margin: 0; padding: 8px; max-height: 260px; overflow: auto; border: 1.5px solid var(--line); border-radius: 10px; display: grid; gap: 4px; font-variant-numeric: slashed-zero; word-break: break-all; }
+.fieldset { border: 1.5px solid var(--line); border-radius: 10px; padding: 8px 12px; display: grid; gap: 6px; margin: 0; }
+.fieldset legend { font-size: 12px; font-weight: 700; color: var(--muted); padding: 0 6px; }
+.table { width: 100%; border-collapse: collapse; }
+.table th { text-align: left; font-weight: 600; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.table td { text-align: right; padding: 6px 0; border-bottom: 1px solid var(--line); }
