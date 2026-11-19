@@ -1,0 +1,6 @@
+# SQL Formatter & API Webhook/cURL Inspector: gaps and decisions
+
+- Implemented: `sql-formatter` across 11 dialects (Standard SQL, PostgreSQL, MySQL, MariaDB, SQLite, T-SQL, Oracle PL/SQL, BigQuery, Snowflake, Redshift, Spark) with keyword case, indent width/tabs, `IN (...)` wrapping, safe SQL minification (rewriting kept `--` comments to `/* ... */` and keeping `/*! ... */` and `/*+ ... */` hints), token-stream equivalence checking, Web Worker execution for large inputs (>= 250 KB) with Cancel; offline cURL / raw HTTP / HTTP/2 pseudo-header parser supporting POSIX/cmd/PowerShell quoting, `-X/-H/-d/--data-raw/--data-binary/--data-urlencode/-F/--json/-u/--compressed/-G/-k/-L`, default-ON redaction of secrets, sortable header table, and fetch/axios/Python `requests`/Node `https` snippet generation.
+- **SQL worker threshold:** formatting runs synchronously on the main thread under 250 KB and offloads to `sql.worker.ts` above 250 KB.
+- **cURL parser:** implemented with an in-house shell tokenizer and flag parser instead of bundling `curlconverter`; exotic flags outside the documented set are listed in "Ignored options".
+- **Binary bodies:** large raw/base64 request bodies are displayed as text without specialized hex preview truncation.
