@@ -1,0 +1,18 @@
+.flag[aria-pressed='true'] { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+.flag:disabled { opacity: 0.45; cursor: not-allowed; }
+.text { min-height: 180px; font-size: 13px; white-space: pre; }
+.preview { font-family: var(--mono); font-size: 13px; white-space: pre-wrap; word-break: break-word; border: 1.5px solid var(--line); border-radius: 10px; padding: 10px 12px; background: var(--surface); max-height: 320px; overflow: auto; line-height: 1.7; }
+.markA, .markB { color: inherit; border-radius: 3px; border-bottom: 2px solid var(--accent); }
+.markA { background: var(--accent-soft); }
+.markB { background: var(--warn-soft); border-bottom-color: var(--warn); }
+.badge { font-size: 9px; font-weight: 700; margin-left: 1px; color: var(--muted); }
+.empty { display: inline-block; width: 2px; height: 1.1em; background: var(--danger); vertical-align: text-bottom; margin: 0 -1px; }
+.table { overflow: auto; max-height: 420px; border: 1.5px solid var(--line); border-radius: 10px; background: var(--surface); }
+.table table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.table th, .table td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--line); vertical-align: top; word-break: break-all; }
+.table th { position: sticky; top: 0; background: var(--surface); }
+.token { display: grid; grid-template-columns: minmax(70px, max-content) 1fr; gap: 12px; align-items: baseline; padding: 4px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+.tokenCode { background: var(--accent-soft); border-radius: 6px; padding: 1px 6px; justify-self: start; }
+.caret { margin: 0; color: var(--danger); font-size: 12px; overflow-x: auto; }
+.cheat { text-align: left; }
+.saved { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
