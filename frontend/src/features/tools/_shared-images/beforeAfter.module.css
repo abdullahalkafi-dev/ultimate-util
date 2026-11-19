@@ -1,0 +1,72 @@
+.frame {
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  overflow: auto;
+  max-height: 560px;
+  display: flex;
+  justify-content: center;
+}
+
+.stage {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  line-height: 0;
+}
+
+.img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  user-select: none;
+}
+
+.over {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.zoomed .stage {
+  max-width: none;
+}
+
+.zoomed .img {
+  max-width: none;
+}
+
+.zoomed .over {
+  width: 100%;
+  height: 100%;
+}
+
+.line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--accent);
+  box-shadow: 0 0 0 1px var(--bg);
+  pointer-events: none;
+}
+
+.label {
+  position: absolute;
+  top: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font: 700 11px/1.6 var(--body, sans-serif);
+  background: var(--fg);
+  color: var(--bg);
+  pointer-events: none;
+}
+
+.left {
+  left: 8px;
+}
+
+.right {
+  right: 8px;
+}
