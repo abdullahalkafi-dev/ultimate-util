@@ -1,0 +1,121 @@
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+.swatch {
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.chip {
+  height: 84px;
+  border: 0;
+  border-bottom: 1.5px solid var(--line);
+  width: 100%;
+  cursor: pointer;
+}
+.swatchBody {
+  padding: 8px;
+  display: grid;
+  gap: 6px;
+}
+.swatchActions {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.swatchActions button,
+.swatchActions input[type='color'] {
+  min-height: 44px;
+  min-width: 44px;
+}
+.verdict {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1.5px solid currentColor;
+}
+.pass {
+  color: var(--ok);
+  background: var(--ok-soft);
+}
+.fail {
+  color: var(--danger);
+  background: var(--danger-soft);
+}
+.na {
+  color: var(--muted);
+}
+.ratio {
+  font: 700 40px var(--head);
+  letter-spacing: -0.02em;
+}
+.sample {
+  border-radius: var(--radius);
+  border: 1.5px solid var(--line2);
+  padding: 16px;
+  display: grid;
+  gap: 10px;
+}
+.uiSample {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 2px solid currentColor;
+  width: fit-content;
+}
+.matrix {
+  border-collapse: collapse;
+  font-size: 12px;
+  width: 100%;
+}
+.matrix th,
+.matrix td {
+  border: 1px solid var(--line);
+  padding: 4px 6px;
+  text-align: center;
+  white-space: nowrap;
+}
+.matrixWrap {
+  overflow-x: auto;
+}
+.code {
+  font-family: var(--mono);
+  font-size: 13px;
+  background: var(--bg);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px;
+  overflow: auto;
+  max-height: 280px;
+  white-space: pre;
+  margin: 0;
+}
+.strip {
+  display: flex;
+  height: 56px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1.5px solid var(--line2);
+}
+.strip > span {
+  flex: 1;
+}
+.shades {
+  display: flex;
+  height: 16px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+.shades > span {
+  flex: 1;
+}
