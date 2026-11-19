@@ -172,6 +172,9 @@ importers:
       eslint:
         specifier: ^9.0.0
         version: 9.39.5(supports-color@7.2.0)
+      globals:
+        specifier: ^17.14.0
+        version: 17.14.0
       prettier:
         specifier: ^3.3.0
         version: 3.10.1
@@ -2253,6 +2256,10 @@ packages:
 
   globals@14.0.0:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
+    engines: {node: '>=18'}
+
+  globals@17.14.0:
+    resolution: {integrity: sha512-UtdkTVyAJePQv0J2M9Xe4L0ruNSDV314XiIJsADI2Zf40bcdAonE/D/OhAU8AT99oij9mhLByb+NvA3QWZYgCg==}
     engines: {node: '>=18'}
 
   guid-typescript@1.0.9:
@@ -4936,6 +4943,8 @@ snapshots:
       is-glob: 4.0.3
 
   globals@14.0.0: {}
+
+  globals@17.14.0: {}
 
   guid-typescript@1.0.9: {}
 

@@ -8,7 +8,6 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const out = path.join(root, 'public', 'vendor');
-const require = createRequire(path.join(root, 'package.json'));
 
 function packageDir(name, from = root) {
   const req = createRequire(path.join(from, 'package.json'));
@@ -49,7 +48,7 @@ add('tesseract worker, core and english data', () => {
   const tess = packageRoot('tesseract.js');
   let n = copy(path.join(tess, 'dist'), path.join(out, 'tesseract'), (f) => f === 'worker.min.js');
   const core = packageRoot('tesseract.js-core', tess);
-  n += copy(core, path.join(out, 'tesseract', 'core'), (f) => /^tesseract-core.*\.(js|wasm)$/.test(f));
+  n += copy(core, path.join(out, 'tesseract', 'core'), (f) => /^tesseract-core(?:-(?:relaxed)?simd)?-lstm\.wasm\.js$/.test(f));
   const data = packageRoot('@tesseract.js-data/eng');
   n += copy(path.join(data, '4.0.0_best_int'), path.join(out, 'tesseract', 'lang'), (f) => f === 'eng.traineddata.gz');
   return n;
@@ -62,7 +61,7 @@ add('ffmpeg single-thread core', () => {
 
 add('onnx runtime', () => {
   const dir = packageRoot('onnxruntime-web');
-  return copy(path.join(dir, 'dist'), path.join(out, 'ort'), (f) => /^ort-wasm-simd-threaded(\.jsep)?\.(mjs|wasm)$/.test(f));
+  return copy(path.join(dir, 'dist'), path.join(out, 'ort'), (f) => /^ort-wasm-simd-threaded\.(mjs|wasm)$/.test(f));
 });
 
 add('qpdf', () => {
