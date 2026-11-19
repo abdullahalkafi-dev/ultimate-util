@@ -1,0 +1,47 @@
+.previewStage {
+  border-radius: var(--radius-lg);
+  border: 1.5px solid var(--line);
+  background: var(--bg);
+  padding: 20px;
+  display: grid;
+  place-items: center;
+  min-height: 280px;
+  overflow: auto;
+}
+.previewStage img,
+.previewStage canvas {
+  max-width: 100%;
+  max-height: 360px;
+  height: auto;
+  border-radius: 6px;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.table th,
+.table td {
+  text-align: left;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--line);
+}
+.table th {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+.codeBox {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  background: var(--bg);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px;
+  margin: 0;
+  overflow: auto;
+  max-height: 260px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}

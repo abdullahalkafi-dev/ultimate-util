@@ -1,0 +1,6 @@
+# Placeholder & Mockup Generator: gaps and decisions
+
+- Implemented: SVG/PNG/JPG/WebP custom placeholder generator (up to 8000 px, solid/cross/grid/gradient patterns, data URI + `<img>` snippet, batch ZIP export, WCAG contrast warning), generic unbranded device frames (Phone, Tablet, Laptop, Browser window at 1x/2x/3x PNG/WebP), and deterministic seeded fake data generator using lazy-loaded `@faker-js/faker` locales (`en`, `bn_BD`, `ar`, `de`, `fr`, `ja`, `es`) with fixed reference date `2026-01-01`, reserved `example.*` email domains, initials SVG avatars via `Intl.Segmenter`, JSON `_meta`, CSV (with UTF-8 BOM + formula-injection guard), and PostgreSQL/MySQL/SQLite SQL exports.
+- **Fake data worker:** generation runs asynchronously on the main thread when the user generates records rather than in a separate Worker; large counts (e.g. 50,000–100,000) will take a couple seconds without a mid-run Cancel button.
+- **Mockup SVG export:** device mockups export as raster PNG and WebP at 1x/2x/3x; SVG export is offered for placeholder images.
+- **Locale coverage:** offers 7 curated locales with verified `@faker-js/faker` bundles (`en`, `bn_BD`, `ar`, `de`, `fr`, `ja`, `es`) instead of all 70+ locales.
