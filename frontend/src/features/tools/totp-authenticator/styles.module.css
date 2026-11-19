@@ -1,0 +1,19 @@
+.list { display: grid; gap: 10px; }
+.card { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; padding: 12px 14px; border: 1px solid var(--border, #8884); border-radius: 12px; background: var(--surface, transparent); }
+.card:focus-within { outline: 2px solid var(--accent, #2563eb); outline-offset: 1px; }
+.main { all: unset; cursor: pointer; display: grid; gap: 2px; min-width: 0; }
+.main:focus-visible { outline: 2px solid var(--accent, #2563eb); border-radius: 6px; }
+.issuer { font-weight: 700; overflow: hidden; text-overflow: ellipsis; }
+.account { font-size: 0.85rem; opacity: 0.75; overflow: hidden; text-overflow: ellipsis; }
+.code { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 1.7rem; letter-spacing: 0.06em; font-variant-numeric: tabular-nums; }
+.next { opacity: 0.55; font-size: 0.9rem; }
+.side { display: flex; gap: 8px; align-items: center; }
+.ring { width: 44px; height: 44px; position: relative; }
+.ring svg { transform: rotate(-90deg); }
+.ringText { position: absolute; inset: 0; display: grid; place-items: center; font-size: 0.8rem; font-variant-numeric: tabular-nums; }
+.warn { color: #b45309; }
+.actions { display: flex; gap: 4px; flex-wrap: wrap; grid-column: 1 / -1; }
+.error { border-style: dashed; }
+.video { width: 100%; }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; }
+@media (max-width: 800px) { .code { font-size: 1.9rem; } }
