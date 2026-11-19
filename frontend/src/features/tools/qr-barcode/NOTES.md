@@ -1,0 +1,6 @@
+# QR Code & Barcode Generator/Scanner: gaps and decisions
+
+- Implemented: QR generator for URL, Text, Wi-Fi (with ZXing quoting & escaping), vCard 3.0, Email, SMS, Phone, Geo, and Calendar VEVENT; custom module/corner shapes, colors with contrast ratio indicator, quiet zone margin, auto-ECC bump with center logo, self-scan check via jsQR, PNG/SVG/print-mm PDF exports; 1D barcodes (Code 128, EAN-13, EAN-8, UPC-A, Code 39, ITF) with GS1 check-digit calculation/verification and SVG/PNG exports; image and webcam scanner using native `BarcodeDetector`, same-origin `/vendor/zxing/zxing_reader.wasm`, and `jsQR`, plus link safety inspection and confirm dialog before opening URLs.
+- **DataMatrix generation:** omitted in v1 to avoid adding another large encoding library (`bwip-js`); 1D barcode generation uses `jsbarcode` and 2D generation covers QR codes. Scanning via `zxing-wasm` reads DataMatrix and other formats.
+- **Fallback scan worker:** decoding runs on downscaled image frames (<= 2000 px) on the main thread via `zxing-wasm` / `jsqr` rather than a separate worker.
+- **Torch / flip camera toggles:** camera stream uses `facingMode: 'environment'` with start/stop controls; per-device torch/camera-switch controls are not exposed in v1.

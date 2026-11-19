@@ -1,0 +1,33 @@
+.qrFrame {
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--line);
+  background: var(--bg);
+  min-height: 290px;
+}
+.qrHost {
+  display: grid;
+  place-items: center;
+  max-width: 100%;
+  overflow: auto;
+}
+.qrHost canvas,
+.qrHost svg {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+.barcodeSvg {
+  max-width: 100%;
+  height: auto;
+  background: #ffffff;
+  border-radius: 8px;
+}
+.resultItem {
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px;
+  background: var(--bg);
+}
