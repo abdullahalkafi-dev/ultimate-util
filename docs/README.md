@@ -9,7 +9,7 @@ Living documentation. Every change, thought and command becomes part of these fi
 | 02-decisions.md | Decisions and reasons |
 | 03-changelog.md | Dated log of changes and user commands |
 | 04-ui-design.md | UI direction, approved home page design |
-| handoff/ | Dated status and next-step reports for whoever continues the work |
+| handoff/ | Dated status and audit reports for whoever continues the work (newest: 2026-11-19-audit-1.md) |
 | features/ | One spec per feature (33 tools + 5 platform features), template, shared conventions, component catalog, cloud rules, research notes and the open questions the owner must answer. Start at [features/README.md](features/README.md) |
 | features/_shared/open-questions.md | Owner decisions needed before coding |
 
