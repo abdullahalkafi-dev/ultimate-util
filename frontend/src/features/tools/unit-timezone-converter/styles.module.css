@@ -1,0 +1,56 @@
+.searchInput {
+  font-size: 18px;
+  font-weight: 600;
+  min-height: 46px;
+}
+.answerCard {
+  padding: 16px;
+  border-radius: var(--radius);
+  background: var(--accent-soft);
+  border: 1.5px solid var(--accent);
+}
+.answerValue {
+  font: 700 28px var(--head);
+  letter-spacing: -0.02em;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.table th,
+.table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+.table th {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+.plannerWrap {
+  overflow-x: auto;
+}
+.plannerGrid {
+  display: grid;
+  grid-template-columns: 160px repeat(24, minmax(22px, 1fr));
+  gap: 2px;
+  align-items: center;
+  font-size: 11px;
+}
+.slot {
+  height: 24px;
+  border-radius: 4px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+}
+.slotWork {
+  background: var(--ok-soft);
+  border-color: var(--ok);
+}
+.slotOverlap {
+  background: var(--accent);
+  border-color: var(--accent);
+}
