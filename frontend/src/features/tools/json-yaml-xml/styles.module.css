@@ -1,0 +1,19 @@
+.editor { min-height: 320px; font-family: var(--mono); font-size: 13px; line-height: 1.5; white-space: pre; tab-size: 2; }
+.output { composes: editor; background: var(--surface); }
+.tree { font-family: var(--mono); font-size: 13px; max-height: 520px; overflow: auto; padding: 8px; border: 1.5px solid var(--line); border-radius: 10px; background: var(--surface); }
+.node { margin-left: 16px; border-left: 1px dashed var(--line); padding-left: 8px; }
+.toggle { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; padding: 1px 4px; border-radius: 6px; }
+.toggle:hover, .toggle:focus-visible { background: var(--accent-soft); }
+.toggle:focus-visible { outline: 2px solid var(--accent); }
+.key { color: var(--accent); font-weight: 600; }
+.str { color: var(--ok); }
+.num { color: var(--warn); }
+.lit { color: var(--muted); }
+.unsafe { text-decoration: underline wavy var(--warn); }
+.mini { all: unset; cursor: pointer; font-size: 11px; color: var(--faint); padding: 0 4px; border-radius: 4px; }
+.mini:hover, .mini:focus-visible { color: var(--fg); background: var(--accent-soft); }
+.diffLine { font-family: var(--mono); font-size: 12.5px; white-space: pre-wrap; word-break: break-all; padding: 0 8px; }
+.add { background: var(--ok-soft); }
+.del { background: var(--danger-soft); }
+.diffBox { border: 1.5px solid var(--line); border-radius: 10px; overflow: auto; max-height: 460px; background: var(--surface); }
+.chg { display: grid; grid-template-columns: 90px 1fr; gap: 8px; padding: 4px 8px; font-size: 13px; border-bottom: 1px solid var(--line); }
