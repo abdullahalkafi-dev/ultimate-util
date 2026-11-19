@@ -105,7 +105,7 @@ export function CommandPalette() {
     const found = searchTools(visibleTools, q, 8).map((t) => toolItem(t.id, 'Tools')).filter((i): i is Item => i !== null);
     const matchedActions = actions.filter((a) => a.label.toLowerCase().includes(q.toLowerCase()));
     return [...found, ...matchedActions];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [query, recents, theme, isAuthed, router, dispatch]);
 
   if (!open) return null;
