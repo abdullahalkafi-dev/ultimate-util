@@ -3,17 +3,19 @@
 _Last updated: 2026-11-19_
 
 ## Status
-Phase 2: feature specs written and audited (33 tools + 5 platform features in `docs/features/`). Home page design is approved: `design/home-a.html`, variant A, palette Ink + Electric Blue. No application code yet.
+Phase 3: build. Specs and approved design are done and pushed. Backend and frontend foundation are done and pushed. 20 of 33 tools have a screen in the working tree, 13 do not, and none of the tool work beyond Word Counter is committed or reviewed yet.
 
-## Next steps (user-driven order)
-1. Owner reviews the specs and answers the open questions in `docs/features/_shared/open-questions.md` (backend provider, licenses, platform support, scope, legal).
-2. Owner shares preferred code structure.
-3. Owner shares credentials; coding starts.
-4. Owner shares deployment and domain access.
+**Start here: [handoff/2026-11-19-status-and-next-steps.md](handoff/2026-11-19-status-and-next-steps.md).** It has the exact per-tool state, known problems, next steps and the audit checklist.
+
+## Next steps
+1. Fix the 3 type errors, run the full checks and a production build.
+2. Review and register the finished tools, commit one tool at a time.
+3. Build the 13 missing tools.
+4. Integration tests for cloud tools, Docker smoke test, docs update.
+5. Owner supplies: Google OAuth credentials, Atlas URL, deployment and domain access (later).
 
 ## Key facts
-- Client-side tools need no login and never upload content. Cloud tools use Google OAuth (identity only); Class A data (2FA secrets, notes) is encrypted on the device with a separate vault passphrase.
-- Every feature has a spec in `docs/features` (index in `docs/features/README.md`); the tool registry (`docs/features/_shared/conventions.md`) is the single source of truth for the home grid, counts, palette and badges.
-- Home page: card grid, ink bookmarks strip backed by localStorage (synced after Google login), featured DOCX card.
-- Visual direction: clean, light, minimal; high contrast Ink + Electric Blue; dark mode supported.
-- Removed from scope by the owner: URL shortener, uptime/SSL monitor, currency rates.
+- Monorepo: `frontend/` (Next.js 16, Redux Toolkit + RTK Query), `backend/` (Fastify + Mongoose), `shared/` (zod schemas). pnpm 12, Docker Compose with local MongoDB.
+- Mock login for local testing; real Google login is written but untested (no credentials yet).
+- No GitHub CI/CD for now. Commits are authored as the owner with no AI attribution.
+- Removed from scope: URL shortener, uptime/SSL monitor, currency rates.

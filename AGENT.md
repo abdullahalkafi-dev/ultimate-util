@@ -8,7 +8,7 @@ Ultimate Util: one fast, searchable web platform of utility tools.
 - Cloud-synced tools: Google OAuth, encrypted/personal data in a database.
 
 ## Current phase
-**Feature specs written and audited (2026-11-19).** Home page design approved (`design/home-a.html`, Ink + Electric Blue). No application code yet. Waiting for the owner to review specs and answer `docs/features/_shared/open-questions.md`.
+**Build phase (2026-11-19).** Specs and design are approved. Backend and frontend foundation are pushed; tools are partly built. See `docs/handoff/2026-11-19-status-and-next-steps.md` before doing anything.
 
 ## Rules
 1. Do not start coding until the user gives: (a) preferred code structure, (b) credentials, (c) deployment and domain access, in that order.
@@ -20,6 +20,7 @@ Ultimate Util: one fast, searchable web platform of utility tools.
 
 ## Docs map
 - `docs/README.md`: index
+- `docs/handoff/`: dated status reports. The newest one says what is done, what is not and what to do next
 - `docs/00-context.md`: current context and status (dated)
 - `docs/01-feature-spec.md`: tool list and scope summary (33 tools + 5 platform features)
 - `docs/02-decisions.md`: decision log

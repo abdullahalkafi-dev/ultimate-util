@@ -16,3 +16,4 @@
 - Wrote 38 feature specs (33 tools + 5 platform) with 6 writing agents; audited and corrected them with 4 audit agents; final consistency pass (titles, links, guest-local rules, registry fields, shared components).
 - Created `features/_shared/open-questions.md` (owner decisions needed before coding).
 - Audit highlights: fixed wrong cron/EventBridge/Kubernetes rules, JWT/WebCrypto facts, F-007 vs F-011 GIF ownership, EXIF orientation contradiction, softbox range mismatch between F-012 and F-031, guest-local data rules, command palette never indexes encrypted notes/2FA by default.
+- Build progress: backend, frontend foundation, Docker and Word Counter pushed. Agent-built tools stopped by a usage limit; state recorded in docs/handoff/2026-11-19-status-and-next-steps.md.
