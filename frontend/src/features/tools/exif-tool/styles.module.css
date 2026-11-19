@@ -1,0 +1,30 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.table th,
+.table td {
+  text-align: left;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.table th {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+.removedRow {
+  background: var(--danger-soft);
+}
+.keptRow {
+  background: var(--ok-soft);
+}
+.thumbPreview {
+  max-width: 180px;
+  max-height: 180px;
+  border-radius: 8px;
+  border: 1.5px solid var(--line);
+}

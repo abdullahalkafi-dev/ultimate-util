@@ -1,0 +1,6 @@
+# EXIF Metadata Viewer & Stripper: gaps and decisions
+
+- Implemented: `exifr` inspection across JPEG, PNG, WebP, HEIC and AVIF with grouped tabs (Summary, Camera, Location with decimal & DMS coordinates, Dates, Software/Author, Thumbnail preview, searchable All fields, Raw container blocks), privacy risk summary banner, lossless container segment stripping for JPEG/PNG/WebP (`strip.ts`), re-parse verification & before/after diff, explicit re-encode fallback button for HEIC/AVIF, batch ZIP download, and opt-in map confirmation dialog opening OpenStreetMap in a new tab.
+- **Map tiles:** instead of fetching map tiles inline (which would conflict with a strict same-origin `connect-src`/`img-src` policy), the confirmed opt-in opens `openstreetmap.org` at the coordinates in a new tab with `noopener,noreferrer`.
+- **Choose individual fields / Edit GPS:** Strip modes offer **Remove everything** (with Keep Orientation and Keep ICC toggles) and **Remove GPS location only**; selective per-field checkboxes and editing custom GPS coordinates are deferred.
+- **Worker thread:** `exifr` header parsing and lossless segment splicing run on the main thread (header parsing is typically a few milliseconds); there is no mid-batch Cancel button.
