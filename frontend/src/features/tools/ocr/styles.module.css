@@ -1,0 +1,31 @@
+.previewBox {
+  position: relative;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  overflow: auto;
+  background: var(--bg);
+  max-height: 440px;
+}
+.previewWrap {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
+.previewWrap img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+.wordBox {
+  position: absolute;
+  border: 1px solid rgba(36, 70, 240, 0.35);
+  background: rgba(36, 70, 240, 0.08);
+  pointer-events: auto;
+}
+.wordBoxLow {
+  border-color: rgba(198, 40, 57, 0.7);
+  background: rgba(198, 40, 57, 0.14);
+}
+.wordBox:hover {
+  background: rgba(36, 70, 240, 0.25);
+}
