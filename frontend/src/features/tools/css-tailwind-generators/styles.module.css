@@ -1,0 +1,68 @@
+.stage {
+  border-radius: var(--radius-lg);
+  border: 1.5px solid var(--line);
+  padding: 28px;
+  min-height: 280px;
+  display: grid;
+  place-items: center;
+  overflow: auto;
+}
+.lightBg {
+  background: #f4f6fb;
+  color: #0b0f19;
+}
+.darkBg {
+  background: #0b0f19;
+  color: #f2f4f9;
+}
+.patternBg {
+  background: linear-gradient(135deg, #2446f0 0%, #7440e8 48%, #d6246e 100%);
+  color: #ffffff;
+}
+.gridDemoBox {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.72);
+  color: #0b0f19;
+  border: 1.5px solid rgba(11, 15, 25, 0.14);
+  border-radius: 12px;
+  padding: 12px;
+}
+.gridDemoCell {
+  background: var(--accent-soft);
+  color: #0b0f19;
+  border: 1.5px solid var(--accent);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-weight: 600;
+  display: grid;
+  place-items: center;
+}
+.previewCard {
+  width: min(100%, 340px);
+  min-height: 170px;
+  padding: 20px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-weight: 600;
+  border-radius: 14px;
+}
+.layerRow {
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: var(--bg);
+}
+.codeBox {
+  font-family: var(--mono);
+  font-size: 13px;
+  background: var(--bg);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px;
+  overflow: auto;
+  max-height: 260px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
