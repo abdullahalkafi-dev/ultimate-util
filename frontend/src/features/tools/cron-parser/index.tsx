@@ -109,16 +109,19 @@ export default function CronParserTool() {
   const parseResult = useMemo(() => parseCron(deferredExpr, dialect), [deferredExpr, dialect]);
   const neverMsg = useMemo(() => (parseResult.ok ? neverRuns(parseResult.parsed) : null), [parseResult]);
 
-  const now = useMemo(() => Date.now(), [deferredExpr, dialect, effectiveTz, runCount]);
+  // The clock only exists in the browser; computing run times on the server would not match the first client render.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const now = useMemo(() => Date.now(), [deferredExpr, dialect, effectiveTz, runCount, mounted]);
 
   const runSearch = useMemo(() => {
-    if (!parseResult.ok || parseResult.parsed.reboot || neverMsg) return null;
+    if (!mounted || !parseResult.ok || parseResult.parsed.reboot || neverMsg) return null;
     return nextRuns(parseResult.parsed, { tz: effectiveTz, from: now, count: runCount });
-  }, [parseResult, neverMsg, effectiveTz, now, runCount]);
+  }, [mounted, parseResult, neverMsg, effectiveTz, now, runCount]);
 
   const dstChanges = useMemo(
-    () => (dialect === 'aws' ? [] : upcomingDstChanges(effectiveTz, now, 2)),
-    [effectiveTz, now, dialect],
+    () => (!mounted || dialect === 'aws' ? [] : upcomingDstChanges(effectiveTz, now, 2)),
+    [mounted, effectiveTz, now, dialect],
   );
 
   const filteredZones = useMemo(() => {

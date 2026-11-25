@@ -10,6 +10,8 @@ export const authApi = api.injectEndpoints({
     getMe: build.query<UserDto | null, void>({
       // 401 simply means "signed out", so it resolves to null instead of an error.
       queryFn: async (_arg, _api, _extra, baseQuery) => {
+        // Guests have no session flag cookie, so skip the request instead of logging a 401.
+        if (typeof document !== 'undefined' && !document.cookie.includes('uu_has_session')) return { data: null };
         const result = await baseQuery('/auth/me');
         if (result.error) {
           if (result.error.status === 401) return { data: null };
