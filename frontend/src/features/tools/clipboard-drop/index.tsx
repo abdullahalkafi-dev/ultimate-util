@@ -277,7 +277,8 @@ export default function ClipboardDrop() {
     setSending(false);
   }, [text, files, e2e, canE2e, key, usage, drops, device, days, createDrop, toast]);
 
-  const addFiles = (list: FileList | File[]) => setFiles((cur) => [...cur, ...Array.from(list)].slice(0, 10));
+  // Copy the list now: a FileList is live and is emptied when the input value is reset below, before the state updater runs.
+  const addFiles = (list: FileList | File[]) => { const picked = Array.from(list); setFiles((cur) => [...cur, ...picked].slice(0, 10)); };
 
   const run = async (p: Promise<unknown>) => {
     try { await p; } catch (e) { toast(apiErrorMessage(e), 'error'); }

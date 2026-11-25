@@ -142,12 +142,13 @@ export default function UnitTimezoneConverter() {
     const trimmed = deferredQuery.trim();
     if (!trimmed) return { kind: 'empty' as const };
     const timeRes = parseTimeQuery(trimmed, nowMs, zoneChoices);
-    if (timeRes) return { kind: 'time' as const, result: timeRes };
     const unitRes = parseUnitQuery(trimmed, {
       decimal: sysDecimal,
       choices: unitChoices,
       alternateNumber: alternateNum,
     });
+    // "5 km in miles" also looks like "<time> <zone> in <zone>"; a failed time parse must not hide a valid unit reading.
+    if (timeRes && (timeRes.ok || !unitRes.ok)) return { kind: 'time' as const, result: timeRes };
     return { kind: 'unit' as const, result: unitRes };
   }, [deferredQuery, nowMs, zoneChoices, sysDecimal, unitChoices, alternateNum]);
 

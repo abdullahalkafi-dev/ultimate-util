@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Banner, ConfirmDialog, CopyButton, Dialog, EmptyState, ErrorBanner, Field, SegmentedControl, SliderField, Tabs, useToast } from '@/components/ui';
 import { downloadText } from '@/lib/files';
 import {
@@ -138,6 +138,9 @@ function ExportDialog({ items, onClose }: { items: LibItem[]; onClose: () => voi
 export default function SavedPalettesPresets() {
   const lib = useLibrary();
   const toast = useToast();
+  // Session state differs between server HTML and first client render; show session-dependent UI only after mount.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   const [filter, setFilter] = useState<Filter>('all');
   const [query, setQuery] = useState('');
   const [tag, setTag] = useState<string | null>(null);
@@ -211,7 +214,7 @@ export default function SavedPalettesPresets() {
 
   return (
     <div className="stack" style={{ gap: 16 }}>
-      {!lib.isAuthed && !lib.sessionLoading && (
+      {mounted && !lib.isAuthed && !lib.sessionLoading && (
         <Banner kind="info">Saved on this device only (up to 50 items). Sign in to sync across devices. Clearing site data removes guest items.</Banner>
       )}
       {lib.expired && <Banner kind="warn">Your session expired. Sign in again to sync. Local edits continue.</Banner>}

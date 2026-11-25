@@ -348,7 +348,7 @@ export default function SnippetManager() {
       <Dialog open={draft !== null} title={draft?.id ? 'Edit snippet' : 'New snippet'} onClose={() => setDraft(null)} locked={busy}
         actions={<><button type="button" className="btn" onClick={() => setDraft(null)}>Cancel</button><button type="button" className="btn primary" disabled={busy} onClick={() => void save()}>{busy ? 'Saving...' : 'Save'}</button></>}>
         {draft && (
-          <div className="stack">
+          <div className="stack" style={{ maxHeight: 'calc(100vh - 220px)', overflowY: 'auto', paddingRight: 4 }}>
             {formError && <ErrorBanner>{formError}</ErrorBanner>}
             {secret && !secretIgnored && (
               <Banner kind="warn" onDismiss={() => setSecretIgnored(true)}>This looks like {secret}. Snippets are not end-to-end encrypted. Save it in Secure Notes instead, or dismiss this and save anyway.</Banner>
