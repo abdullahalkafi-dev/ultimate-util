@@ -385,7 +385,7 @@ export function parseCron(input: string, dialect: Dialect): ParseResult {
       );
     } else {
       dayRule = 'or';
-      warnings.push(`Day-of-month and day-of-week are both restricted, so the job runs when EITHER matches: on day ${dom.raw} of the month OR on ${dow.raw} days, not only when both are true.`);
+      warnings.push(`Day-of-month and day-of-week are both restricted, so the job runs when EITHER matches: on day-of-month ${dom.raw} OR on day-of-week ${dow.raw}, not only when both are true.`);
     }
     if (dialect === 'aws') notes.push('EventBridge rules always run in UTC.');
     if (dialect === 'k8s') notes.push('Kubernetes uses the controller timezone (usually UTC) unless .spec.timeZone is set (stable since v1.27).');
