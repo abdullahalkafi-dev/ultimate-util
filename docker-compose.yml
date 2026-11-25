@@ -40,7 +40,7 @@ services:
       MONGO_URI: ${ATLAS_URI:-mongodb://mongo:27017/ultimate-util?replicaSet=rs0}
       NODE_ENV: ${NODE_ENV:-development}
     ports:
-      - "4000:4000"
+      - "${BACKEND_HOST_PORT:-4000}:4000"
 
   frontend:
     build:
