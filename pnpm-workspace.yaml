@@ -5,3 +5,6 @@ packages:
 
 allowBuilds:
   esbuild: true
+  # Their install scripts only print funding or version notices.
+  protobufjs: false
+  tesseract.js: false
