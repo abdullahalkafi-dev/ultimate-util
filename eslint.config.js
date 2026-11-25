@@ -10,7 +10,7 @@ const stubPlugins = {
 };
 
 export default tseslint.config(
-  { ignores: ['**/dist/**', '**/.next/**', '**/node_modules/**', '**/coverage/**', 'design/**', '**/public/vendor/**'] },
+  { ignores: ['**/dist/**', '**/.next*/**', '**/node_modules/**', '**/coverage/**', 'design/**', '**/public/vendor/**'] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
