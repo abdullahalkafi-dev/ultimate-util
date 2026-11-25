@@ -27,5 +27,3 @@
 .find { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 8px; border-bottom: 1.5px solid var(--line); }
 .outline { margin: 0; padding-left: 18px; max-height: 240px; overflow: auto; }
 .outline button { border: 0; background: none; padding: 2px 0; text-align: left; color: var(--fg); text-decoration: underline; }
-::highlight(uu-find) { background: #ffe58a; color: #000; }
-::highlight(uu-find-current) { background: #ff9d3a; color: #000; }

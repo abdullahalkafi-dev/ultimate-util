@@ -277,3 +277,7 @@ input[type='checkbox'], input[type='radio'] { accent-color: var(--accent); width
 .recovery-key { font: 600 15px var(--mono); letter-spacing: 0.04em; padding: 14px; background: var(--bg); border: 1.5px dashed var(--line2); border-radius: 10px; word-break: break-all; user-select: all; }
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } .tool-card:hover { transform: none; } }
+
+/* Find-in-document highlights for the DOCX editor (CSS Custom Highlight API). */
+::highlight(uu-find) { background: #ffe58a; color: #000; }
+::highlight(uu-find-current) { background: #ff9d3a; color: #000; }

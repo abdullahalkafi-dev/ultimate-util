@@ -12,8 +12,20 @@ const securityHeaders = [
 
 const config: NextConfig = {
   output: 'standalone',
+  distDir: process.env.NEXT_DIST_DIR ?? '.next',
   outputFileTracingRoot: path.join(__dirname, '..'),
   reactStrictMode: true,
+  turbopack: {
+    resolveAlias: {
+      fs: { browser: './src/lib/empty-module.ts' },
+      path: { browser: './src/lib/empty-module.ts' },
+      crypto: { browser: './src/lib/empty-module.ts' },
+    },
+  },
+  webpack(cfg, { isServer }) {
+    if (!isServer) cfg.resolve.fallback = { ...cfg.resolve.fallback, fs: false, path: false, crypto: false };
+    return cfg;
+  },
   poweredByHeader: false,
   async rewrites() {
     // Same-origin API so login cookies work without CORS.
