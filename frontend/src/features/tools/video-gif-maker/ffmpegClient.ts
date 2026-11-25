@@ -23,6 +23,7 @@ async function ensureFfmpeg(): Promise<FFmpeg> {
         ff.load({
           coreURL: `${origin}/vendor/ffmpeg/ffmpeg-core.js`,
           wasmURL: `${origin}/vendor/ffmpeg/ffmpeg-core.wasm`,
+          classWorkerURL: `${origin}/vendor/ffmpeg/worker/worker.js`,
         }),
         timeout,
       ]);

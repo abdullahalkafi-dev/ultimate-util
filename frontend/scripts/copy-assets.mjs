@@ -59,6 +59,12 @@ add('ffmpeg single-thread core', () => {
   return copy(path.join(dir, 'dist', 'esm'), path.join(out, 'ffmpeg'), (f) => f.startsWith('ffmpeg-core'));
 });
 
+// The ffmpeg worker is served unbundled: webpack rewrites its dynamic import() and the core then fails to load.
+add('ffmpeg worker', () => {
+  const dir = packageRoot('@ffmpeg/ffmpeg');
+  return copy(path.join(dir, 'dist', 'esm'), path.join(out, 'ffmpeg', 'worker'), (f) => ['worker.js', 'const.js', 'errors.js'].includes(f));
+});
+
 add('onnx runtime', () => {
   const dir = packageRoot('onnxruntime-web');
   return copy(path.join(dir, 'dist'), path.join(out, 'ort'), (f) => /^ort-wasm-simd-threaded\.(mjs|wasm)$/.test(f));

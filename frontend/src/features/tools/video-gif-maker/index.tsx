@@ -327,7 +327,8 @@ export default function VideoGifMakerTool() {
       setResult({ blob, url, filename: friendlyName, kind });
       toast(`Ready: ${friendlyName} (${formatBytes(blob.size)})`);
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'FFmpeg processing failed.');
+      console.error('ffmpeg job failed', e);
+      setError(e instanceof Error ? e.message : typeof e === 'string' && e ? e : 'FFmpeg processing failed.');
     } finally {
       setProgress(null);
     }
