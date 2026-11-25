@@ -1,3 +1,4 @@
+// The legacy build runs on browsers older than Chrome 140 (the modern build needs Uint8Array.prototype.toHex).
 import type { PDFDocumentProxy } from 'pdfjs-dist';
 
 export class PdfPasswordError extends Error {
@@ -6,11 +7,11 @@ export class PdfPasswordError extends Error {
   }
 }
 
-let ready: Promise<typeof import('pdfjs-dist')> | null = null;
+let ready: Promise<typeof import('pdfjs-dist/legacy/build/pdf.mjs')> | null = null;
 
 /** Loads pdf.js on first use; its worker is served from our own origin. */
 export function loadPdfjs() {
-  ready ??= import('pdfjs-dist').then((lib) => {
+  ready ??= import('pdfjs-dist/legacy/build/pdf.mjs').then((lib) => {
     lib.GlobalWorkerOptions.workerSrc = '/vendor/pdfjs/pdf.worker.min.mjs';
     return lib;
   });

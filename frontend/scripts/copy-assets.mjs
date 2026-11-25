@@ -41,7 +41,7 @@ function copy(from, to, filter) {
 
 add('pdfjs worker', () => {
   const dir = packageRoot('pdfjs-dist');
-  return copy(path.join(dir, 'build'), path.join(out, 'pdfjs'), (n) => n === 'pdf.worker.min.mjs');
+  return copy(path.join(dir, 'legacy', 'build'), path.join(out, 'pdfjs'), (n) => n === 'pdf.worker.min.mjs');
 });
 
 add('tesseract worker, core and english data', () => {
