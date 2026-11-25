@@ -34,14 +34,6 @@ const config: NextConfig = {
   async headers() {
     return [
       { source: '/:path*', headers: securityHeaders },
-      {
-        // Only the video tool needs cross-origin isolation (multi-thread ffmpeg).
-        source: '/tools/video-gif-maker',
-        headers: [
-          { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
-          { key: 'Cross-Origin-Embedder-Policy', value: 'require-corp' },
-        ],
-      },
     ];
   },
 };
