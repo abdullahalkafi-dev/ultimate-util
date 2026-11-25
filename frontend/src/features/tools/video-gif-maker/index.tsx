@@ -398,6 +398,10 @@ export default function VideoGifMakerTool() {
                   controls
                   style={{ width: '90%' }}
                   onLoadedMetadata={(e) => syncLoadedDuration(e.currentTarget.duration)}
+                  onDurationChange={(e) => {
+                    const d = e.currentTarget.duration;
+                    if (Number.isFinite(d) && d > 0 && d !== durationSec) syncLoadedDuration(d);
+                  }}
                   onTimeUpdate={(e) => setCurrentSec(e.currentTarget.currentTime)}
                 />
               ) : (
@@ -407,6 +411,10 @@ export default function VideoGifMakerTool() {
                   controls
                   className={styles.mediaEl}
                   onLoadedMetadata={(e) => syncLoadedDuration(e.currentTarget.duration)}
+                  onDurationChange={(e) => {
+                    const d = e.currentTarget.duration;
+                    if (Number.isFinite(d) && d > 0 && d !== durationSec) syncLoadedDuration(d);
+                  }}
                   onTimeUpdate={(e) => setCurrentSec(e.currentTarget.currentTime)}
                 />
               )}

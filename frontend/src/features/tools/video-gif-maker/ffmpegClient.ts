@@ -11,10 +11,31 @@ async function ensureFfmpeg(): Promise<FFmpeg> {
     const { FFmpeg } = await import('@ffmpeg/ffmpeg');
     const ff = new FFmpeg();
     const origin = typeof window !== 'undefined' ? window.location.origin : '';
-    await ff.load({
-      coreURL: `${origin}/vendor/ffmpeg/ffmpeg-core.js`,
-      wasmURL: `${origin}/vendor/ffmpeg/ffmpeg-core.wasm`,
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const timeout = new Promise<never>((_, reject) => {
+      timer = setTimeout(
+        () => reject(new Error('FFmpeg did not start. The browser may be blocking its worker; reload the page and try again.')),
+        45000,
+      );
     });
+    try {
+      await Promise.race([
+        ff.load({
+          coreURL: `${origin}/vendor/ffmpeg/ffmpeg-core.js`,
+          wasmURL: `${origin}/vendor/ffmpeg/ffmpeg-core.wasm`,
+        }),
+        timeout,
+      ]);
+    } catch (err) {
+      try {
+        ff.terminate();
+      } catch {
+        // ignore
+      }
+      throw err;
+    } finally {
+      clearTimeout(timer);
+    }
     instance = ff;
     return ff;
   })().catch((err) => {
