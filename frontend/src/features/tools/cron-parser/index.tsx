@@ -77,9 +77,13 @@ export default function CronParserTool() {
   const [loaded, setLoaded] = useState(false);
   const errorId = useId();
 
-  const allZones = useMemo(() => listTimeZones(), []);
+  // The zone list differs between the server runtime and the browser, so it is read after mount.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const allZones = useMemo(() => (mounted ? listTimeZones() : ['UTC']), [mounted]);
 
   useEffect(() => {
+    if (!mounted) return;
     let browserTz = 'UTC';
     try {
       browserTz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
@@ -96,7 +100,7 @@ export default function CronParserTool() {
       setTz(browserTz);
     }
     setLoaded(true);
-  }, [allZones]);
+  }, [mounted, allZones]);
 
   useEffect(() => {
     if (!loaded) return;
@@ -110,8 +114,6 @@ export default function CronParserTool() {
   const neverMsg = useMemo(() => (parseResult.ok ? neverRuns(parseResult.parsed) : null), [parseResult]);
 
   // The clock only exists in the browser; computing run times on the server would not match the first client render.
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
   const now = useMemo(() => Date.now(), [deferredExpr, dialect, effectiveTz, runCount, mounted]);
 
   const runSearch = useMemo(() => {
