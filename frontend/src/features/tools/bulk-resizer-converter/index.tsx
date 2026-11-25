@@ -219,10 +219,14 @@ export default function BulkResizerConverter() {
           const jobs = svgJobs(settings, base);
           const format = resolveFormat(settings.format, 'svg');
           const outList: OutputFile[] = [];
+          const skippedMsgs: string[] = [];
 
           for (const job of jobs) {
             if (runToken.current !== token) return;
-            if (job.skipped) continue;
+            if (job.skipped) {
+              skippedMsgs.push(job.skipped);
+              continue;
+            }
             const pngBlob = await rasterizeSvg(item.svgText, job.rasterW, job.rasterH);
             const buf = await pngBlob.arrayBuffer();
             const res = await pool.run(buf, [{ key: job.key, resize: job.resize, encode: encodeSpecFor(settings, format) }]);
@@ -248,7 +252,8 @@ export default function BulkResizerConverter() {
               format,
             });
           }
-          patchItem(item.id, { status: 'done', outputs: outList });
+          if (outList.length === 0) throw new Error(skippedMsgs[0] ?? 'No output produced.');
+          patchItem(item.id, { status: 'done', outputs: outList, notes: [...item.notes, ...skippedMsgs] });
         } else if (prep.type !== 'svg') {
           const format = resolveFormat(settings.format, prep.type);
           const jobs = rasterJobs(settings, prep.type);
