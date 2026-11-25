@@ -14,3 +14,6 @@
 | 2026-11-19 | PROPOSED (spec default, awaiting owner): Class A data (2FA, notes) encrypted on device with a separate vault passphrase + recovery key | Google login alone must not expose secrets |
 | 2026-11-19 | PROPOSED (spec default, awaiting owner): Google login by redirect (not popup) | Avoids COOP/COEP conflict with the video tool route; confirm in spike |
 | 2026-11-19 | PROPOSED (spec default, awaiting owner): Local tools make no network calls with user content, enforced by CI audit + CSP | Core privacy promise |
+
+## 2026-11-26: production build uses webpack
+`next build` with Turbopack hangs forever on this codebase (no error, low CPU, nothing written). `next build --webpack` finishes in under a minute and printed the real errors that Turbopack hid (a CSS module using `::highlight(...)`, and the qpdf wasm glue importing Node's `fs`). The build script now passes `--webpack`. `next dev` still uses Turbopack. Revisit when Next.js is upgraded.
